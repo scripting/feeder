@@ -1,0 +1,12 @@
+{
+	"name": "feeder",
+	"version": "0.4.1",
+	"author": "Dave Winer <dave@scripting.com>",
+	"main": "feeder.js",
+	"dependencies" : {
+		"daveutils": "*",
+		"davefeedread": "*",
+		"davehttp": "*",
+		"opml": "*"
+		} 
+	}
