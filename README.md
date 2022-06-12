@@ -12,13 +12,13 @@ There are two calls supported: /returnjson and /returnopml. Both take a <i>url</
 
 Examples:
 
-* http://feeder.scripting.com/returnjson?url=http://scripting.com/rss.xml 
+http://feeder.scripting.com/returnjson?url=http://scripting.com/rss.xml 
 
-Returns a JSON structure containing the information in the feed, as processed by reallysimple. 
+* Returns a JSON structure containing the information in the feed, as processed by reallysimple. 
 
-* http://feeder.scripting.com/returnopml?url=http://scripting.com/rss.xml 
+http://feeder.scripting.com/returnopml?url=http://scripting.com/rss.xml 
 
-Returns an OPML structure which you can insert into an outline, with all the items from the feed. 
+* Returns an OPML structure which you can insert into an outline, with all the items from the feed. 
 
 ### Caveats
 
