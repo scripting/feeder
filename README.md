@@ -8,7 +8,7 @@ To provide service to Drummer and possibly other apps that run in the browser.
 
 ### Two calls
 
-There are two calls supported: /returnjson and /returnopml. Both take a <i>url</i> parameter. 
+Two calls are supported: /returnjson and /returnopml. Both take a <i>url</i> parameter. 
 
 http://feeder.scripting.com/returnjson?url=http://scripting.com/rss.xml 
 
@@ -18,7 +18,7 @@ http://feeder.scripting.com/returnopml?url=http://scripting.com/rss.xml
 
 * Returns an OPML structure which you can insert into an outline, with all the items from the feed. 
 
-These calls are used from Drummer to implement the rss.readFeed verb and to allow expanding of <i>rss</i> node types. 
+These calls are used from <a href="http://drummer.scripting.com/">Drummer</a> to implement the <a href="http://docserver.scripting.com/?verb=rss.readFeed">rss.readFeed</a> verb and to allow <a href="https://www.youtube.com/watch?v=j7L1bvP0dQc">expanding of rss node types</a>. 
 
 ### Caveats
 
