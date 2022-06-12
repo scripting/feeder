@@ -42,7 +42,6 @@ davehttp.start (config, function (theRequest) {
 			}
 		}
 	switch (theRequest.lowerpath) {
-		case "/":
 		case "/returnjson": 
 			readFeed (params.url, httpReturn);
 			break;
