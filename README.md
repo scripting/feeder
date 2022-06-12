@@ -4,7 +4,7 @@ A Node server app that hooks the <a href="https://github.com/scripting/reallysim
 
 ### Why?
 
-To provide service to Drummer and possibly other apps that run in the browser.
+To provide service to <a href="http://drummer.scripting.com/">Drummer</a> and possibly other apps that run in the browser.
 
 ### Two calls
 
