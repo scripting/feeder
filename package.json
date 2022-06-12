@@ -1,12 +1,20 @@
 {
 	"name": "feeder",
-	"version": "0.4.1",
+	"description": "A Node server app that hooks the reallysimple package up to the web.",
+	"version": "0.4.3",
 	"author": "Dave Winer <dave@scripting.com>",
+	"license": "MIT",
 	"main": "feeder.js",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/scripting/feeder.git"
+		},
 	"dependencies" : {
 		"daveutils": "*",
-		"davefeedread": "*",
-		"davehttp": "*",
-		"opml": "*"
-		} 
+		"reallysimple": "*",
+		"davehttp": "*"
+		},
+	"engines": { 
+		"node": "*"
+		}
 	}

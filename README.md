@@ -1,2 +1,4 @@
 # feeder
-A set of services that do feed reading for Drummer scripts.
+
+A Node server app that hooks the reallysimple package up to the web.
+
