@@ -1,7 +1,8 @@
-const myVersion = "0.4.5", myProductName = "feeder";    
+const myVersion = "0.4.6", myProductName = "feeder";    
 
 const fs = require ("fs");
 const utils = require ("daveutils");
+const request = require ("request"); 
 const davehttp = require ("davehttp"); 
 const reallysimple = require ("reallysimple");
 
@@ -10,7 +11,9 @@ var config = {
 	flAllowAccessFromAnywhere: true,
 	flLogToConsole: true,
 	defaultFeedUrl: "http://nytimes.com/timeswire/feeds/",
-	fnameStats: "stats.json"
+	fnameStats: "stats.json",
+	urlMailboxTemplate: "http://scripting.com/code/river6/templates/feedviewer/index.html",
+	viewersFolderPath: "viewers/"
 	}
 
 var stats = {
@@ -56,6 +59,33 @@ function readFeed (feedUrl=config.defaultFeedUrl, callback) {
 		statsChanged ();
 		});
 	}
+function viewFeedInTemplate (feedUrl, viewerName, callback) { //6/20/22 by DW
+	function servePage (templatetext, theFeed) {
+		var pagetable = {
+			productNameForDisplay: myProductName, 
+			version: myVersion,
+			feedTitle: theFeed.title,
+			config: utils.jsonStringify ({}), //a feature we aren't using
+			riverJsonText: utils.jsonStringify (theFeed) //probably shouldn't call this "river," it's just a feed not a river
+			};
+		var pagetext = utils.multipleReplaceAll (templatetext.toString (), pagetable, false, "[%", "%]");
+		callback (pagetext);
+		}
+	readFeed (feedUrl, function (err, theFeed) {
+		var flnotfound = true, lowerViewerName = utils.stringLower (viewerName);
+		utils.sureFolder (config.viewersFolderPath, function () {
+			var f = config.viewersFolderPath + viewerName + ".html";
+			fs.readFile (f, function (err, templatetext) {
+				if (err) {
+					callback ("Can't view the feed because there was an error reading the viewer.");
+					}
+				else {
+					servePage (templatetext, theFeed);
+					}
+				});
+			});
+		});
+	}
 function readConfig (f, config, callback) {
 	fs.readFile (f, function (err, jsontext) {
 		if (!err) {
@@ -80,6 +110,7 @@ function everySecond () {
 		}
 	}
 
+
 readConfig (config.fnameStats, stats, function () {
 	stats.ctLaunches++;
 	stats.whenLastLaunch = new Date ();
@@ -88,6 +119,9 @@ readConfig (config.fnameStats, stats, function () {
 		var params = theRequest.params;
 		function returnNotFound () {
 			theRequest.httpReturn (404, "text/plain", "Not found.");
+			}
+		function returnHtml (htmltext) {
+			theRequest.httpReturn (200, "text/html; charset=utf-8", htmltext); //6/13/22 by DW
 			}
 		function returnOpml (opmltext) {
 			theRequest.httpReturn (200, "text/xml; charset=utf-8", opmltext); //6/13/22 by DW
@@ -109,7 +143,25 @@ readConfig (config.fnameStats, stats, function () {
 				returnData (jstruct);
 				}
 			}
+		function returnRedirect (url) {
+			const code = 302;
+			theRequest.httpReturn (code, "text/plain", code + " REDIRECT", {location: url});
+			}
+			
+		function mailboxRedirect () {
+			var newUrl = "/?template=mailbox";
+			if (params.url !== undefined) {
+				newUrl += "&url=" + params.url;
+				}
+			returnRedirect (newUrl);
+			}
 		switch (theRequest.lowerpath) {
+			case "/": //6/20/22 by DW
+				viewFeedInTemplate (params.url, params.template, returnHtml);
+				break;
+			case "/stats": 
+				returnData (stats); 
+				break;
 			case "/returnjson": 
 				readFeed (params.url, httpReturn);
 				break;
@@ -122,6 +174,9 @@ readConfig (config.fnameStats, stats, function () {
 						returnOpml (reallysimple.convertFeedToOpml (theFeed));
 						}
 					});
+				break;
+			case "/returnmailbox": //6/18/22 by DW
+				mailboxRedirect ();
 				break;
 			default:
 				returnNotFound ();
