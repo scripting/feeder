@@ -1,4 +1,4 @@
-const myVersion = "0.4.6", myProductName = "feeder";    
+const myVersion = "0.4.7", myProductName = "feeder";    
 
 const fs = require ("fs");
 const utils = require ("daveutils");
@@ -12,8 +12,7 @@ var config = {
 	flLogToConsole: true,
 	defaultFeedUrl: "http://nytimes.com/timeswire/feeds/",
 	fnameStats: "stats.json",
-	urlMailboxTemplate: "http://scripting.com/code/river6/templates/feedviewer/index.html",
-	viewersFolderPath: "viewers/"
+	templatesFolderPath: "templates/"
 	}
 
 var stats = {
@@ -30,6 +29,18 @@ var flStatsChanged = false;
 
 function statsChanged () {
 	flStatsChanged = true;
+	}
+function buildParamList (params) {
+	var s = "";
+	for (var x in params) {
+		if (params [x] !== undefined) {
+			if (s.length > 0) {
+				s += "&";
+				}
+			s += x + "=" + encodeURIComponent (params [x]);
+			}
+		}
+	return (s);
 	}
 function readFeed (feedUrl=config.defaultFeedUrl, callback) {
 	const whenstart = new Date ();
@@ -61,20 +72,24 @@ function readFeed (feedUrl=config.defaultFeedUrl, callback) {
 	}
 function viewFeedInTemplate (feedUrl, viewerName, callback) { //6/20/22 by DW
 	function servePage (templatetext, theFeed) {
+		const feedJsonText = utils.jsonStringify (theFeed);
+		const serverConfig = {
+			productName: myProductName, 
+			version: myVersion
+			};
 		var pagetable = {
-			productNameForDisplay: myProductName, 
-			version: myVersion,
 			feedTitle: theFeed.title,
-			config: utils.jsonStringify ({}), //a feature we aren't using
-			riverJsonText: utils.jsonStringify (theFeed) //probably shouldn't call this "river," it's just a feed not a river
+			config: utils.jsonStringify (serverConfig),
+			riverJsonText: feedJsonText, //for compatibility with River6
+			feedJsonText
 			};
 		var pagetext = utils.multipleReplaceAll (templatetext.toString (), pagetable, false, "[%", "%]");
 		callback (pagetext);
 		}
 	readFeed (feedUrl, function (err, theFeed) {
 		var flnotfound = true, lowerViewerName = utils.stringLower (viewerName);
-		utils.sureFolder (config.viewersFolderPath, function () {
-			var f = config.viewersFolderPath + viewerName + ".html";
+		utils.sureFolder (config.templatesFolderPath, function () {
+			var f = config.templatesFolderPath + viewerName + ".html";
 			fs.readFile (f, function (err, templatetext) {
 				if (err) {
 					callback ("Can't view the feed because there was an error reading the viewer.");
@@ -109,64 +124,66 @@ function everySecond () {
 			});
 		}
 	}
-
-
-readConfig (config.fnameStats, stats, function () {
-	stats.ctLaunches++;
-	stats.whenLastLaunch = new Date ();
-	statsChanged ();
-	davehttp.start (config, function (theRequest) {
-		var params = theRequest.params;
-		function returnNotFound () {
-			theRequest.httpReturn (404, "text/plain", "Not found.");
+function handleHttpRequest (theRequest) {
+	var params = theRequest.params;
+	function returnNotFound () {
+		theRequest.httpReturn (404, "text/plain", "Not found.");
+		}
+	function returnRedirect (url) {
+		const code = 302;
+		theRequest.httpReturn (code, "text/plain", code + " REDIRECT", {location: url});
+		}
+		
+	function returnHtml (htmltext) {
+		theRequest.httpReturn (200, "text/html; charset=utf-8", htmltext); //6/13/22 by DW
+		}
+	function returnOpml (opmltext) {
+		theRequest.httpReturn (200, "text/xml; charset=utf-8", opmltext); //6/13/22 by DW
+		}
+	function returnError (jstruct) {
+		theRequest.httpReturn (500, "application/json", utils.jsonStringify (jstruct));
+		}
+	function returnData (jstruct) {
+		if (jstruct === undefined) {
+			jstruct = {};
 			}
-		function returnHtml (htmltext) {
-			theRequest.httpReturn (200, "text/html; charset=utf-8", htmltext); //6/13/22 by DW
+		theRequest.httpReturn (200, "application/json; charset=utf-8", utils.jsonStringify (jstruct)); //6/13/22 by DW
+		}
+	function httpReturn (err, jstruct) {
+		if (err) {
+			returnError (err);
 			}
-		function returnOpml (opmltext) {
-			theRequest.httpReturn (200, "text/xml; charset=utf-8", opmltext); //6/13/22 by DW
+		else {
+			returnData (jstruct);
 			}
-		function returnError (jstruct) {
-			theRequest.httpReturn (500, "application/json", utils.jsonStringify (jstruct));
+		}
+	function mailboxRedirect () {
+		var newUrl = "/?template=mailbox";
+		if (params.url !== undefined) {
+			newUrl += "&url=" + params.url;
 			}
-		function returnData (jstruct) {
-			if (jstruct === undefined) {
-				jstruct = {};
-				}
-			theRequest.httpReturn (200, "application/json; charset=utf-8", utils.jsonStringify (jstruct)); //6/13/22 by DW
-			}
-		function httpReturn (err, jstruct) {
-			if (err) {
-				returnError (err);
-				}
-			else {
-				returnData (jstruct);
-				}
-			}
-		function returnRedirect (url) {
-			const code = 302;
-			theRequest.httpReturn (code, "text/plain", code + " REDIRECT", {location: url});
-			}
-			
-		function mailboxRedirect () {
-			var newUrl = "/?template=mailbox";
-			if (params.url !== undefined) {
-				newUrl += "&url=" + params.url;
-				}
-			returnRedirect (newUrl);
-			}
+		returnRedirect (newUrl);
+		}
+	
+	if (params.url !== undefined) { //6/20/22 by DW
+		params.feedurl = params.url;
+		delete params.url;
+		let newUrl = theRequest.lowerpath + "?" + buildParamList (params);
+		returnRedirect (newUrl);
+		}
+	else {
 		switch (theRequest.lowerpath) {
 			case "/": //6/20/22 by DW
-				viewFeedInTemplate (params.url, params.template, returnHtml);
+				viewFeedInTemplate (params.feedurl, params.template, returnHtml);
 				break;
 			case "/stats": 
 				returnData (stats); 
 				break;
 			case "/returnjson": 
-				readFeed (params.url, httpReturn);
+				readFeed (params.feedurl, httpReturn);
 				break;
 			case "/returnopml":
-				readFeed (params.url, function (err, theFeed) {
+				readFeed (params.feedurl, function (err, theFeed) {
 					if (err) {
 						returnError (err);
 						}
@@ -182,6 +199,13 @@ readConfig (config.fnameStats, stats, function () {
 				returnNotFound ();
 				break;
 			}
-		});
+		}
+	}
+
+readConfig (config.fnameStats, stats, function () {
+	stats.ctLaunches++;
+	stats.whenLastLaunch = new Date ();
+	statsChanged ();
+	davehttp.start (config, handleHttpRequest)
 	setInterval (everySecond, 1000); 
 	});
