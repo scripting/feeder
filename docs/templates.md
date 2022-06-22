@@ -44,19 +44,19 @@ Here's the code that builds the list.
 
 function viewTitledItems () {
 
-var htmltext = "";
+      var htmltext = "";
 
-function add (s) {
+      function add (s) {
 
-htmltext += s + "\n";
+            htmltext += s + "\n";
 
-}
+            }
 
-add ("<ul>"); 
+      add ("<ul>"); 
 
-theFeed.items.forEach (function (item) {
+      theFeed.items.forEach (function (item) {
 
-if (item.title !== undefined) {
+            if (item.title !== undefined) {
 
 var link = item.title;
 
@@ -70,13 +70,13 @@ add ("<li>" + link + "</li>");
 
 }
 
-});
+            });
 
-add ("</ul>"); 
+      add ("</ul>"); 
 
-return (htmltext);
+      return (htmltext);
 
-}
+      }
 
 ```
 
