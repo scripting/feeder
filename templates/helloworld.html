@@ -2,15 +2,6 @@
 	<head>
 		<title>[%feedTitle%]</title>
 		<script src="http://fargo.io/code/jquery-1.9.1.min.js"></script>
-		<script>
-			const config = [%config%];
-			const theFeed = [%feedJsonText%];
-			
-			function startup () {
-				console.log (config.productName + " v" + config.version);
-				$("#idFeedInfo").text (JSON.stringify (theFeed, undefined, 4));
-				}
-			</script>
 		<style>
 			.divPageBody {
 				width: 85%;
@@ -24,6 +15,15 @@
 				overflow: scroll;
 				}
 			</style>
+		<script>
+			const config = [%config%];
+			const theFeed = [%feedJsonText%];
+			
+			function startup () {
+				console.log (config.productName + " v" + config.version);
+				$("#idFeedInfo").text (JSON.stringify (theFeed, undefined, 4));
+				}
+			</script>
 		</head>
 	<body>
 		<div class="divPageBody">

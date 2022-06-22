@@ -1,4 +1,4 @@
-const myVersion = "0.4.7", myProductName = "feeder";    
+const myVersion = "0.4.8", myProductName = "feeder";    
 
 const fs = require ("fs");
 const utils = require ("daveutils");
@@ -70,7 +70,7 @@ function readFeed (feedUrl=config.defaultFeedUrl, callback) {
 		statsChanged ();
 		});
 	}
-function viewFeedInTemplate (feedUrl, viewerName, callback) { //6/20/22 by DW
+function viewFeedInTemplate (feedUrl, templateName, callback) { //6/20/22 by DW
 	function servePage (templatetext, theFeed) {
 		const feedJsonText = utils.jsonStringify (theFeed);
 		const serverConfig = {
@@ -79,6 +79,7 @@ function viewFeedInTemplate (feedUrl, viewerName, callback) { //6/20/22 by DW
 			};
 		var pagetable = {
 			feedTitle: theFeed.title,
+			productnameForDisplay: myProductName, //it appears in the mailbox template -- 6/22/22 AM by DW
 			config: utils.jsonStringify (serverConfig),
 			riverJsonText: feedJsonText, //for compatibility with River6
 			feedJsonText
@@ -87,12 +88,12 @@ function viewFeedInTemplate (feedUrl, viewerName, callback) { //6/20/22 by DW
 		callback (pagetext);
 		}
 	readFeed (feedUrl, function (err, theFeed) {
-		var flnotfound = true, lowerViewerName = utils.stringLower (viewerName);
+		var flnotfound = true;
 		utils.sureFolder (config.templatesFolderPath, function () {
-			var f = config.templatesFolderPath + viewerName + ".html";
+			var f = config.templatesFolderPath + templateName + ".html";
 			fs.readFile (f, function (err, templatetext) {
 				if (err) {
-					callback ("Can't view the feed because there was an error reading the viewer.");
+					callback ("Can't view the feed because there was an error reading the template.");
 					}
 				else {
 					servePage (templatetext, theFeed);
@@ -160,7 +161,10 @@ function handleHttpRequest (theRequest) {
 	function mailboxRedirect () {
 		var newUrl = "/?template=mailbox";
 		if (params.url !== undefined) {
-			newUrl += "&url=" + params.url;
+			params.feedurl = params.url;
+			}
+		if (params.feedurl !== undefined) {
+			newUrl += "&feedurl=" + encodeURIComponent (params.feedurl);
 			}
 		returnRedirect (newUrl);
 		}
