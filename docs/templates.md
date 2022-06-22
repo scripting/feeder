@@ -26,7 +26,7 @@ From there, the primary job of the template is to display and allow the user to 
 
 <i>config</i> is there mostly for the future, if there's information we might want to send to all templates from the server that's hosting the template. Initially it just has the name of the feeder app and its version. 
 
-The Hello World app just displays what's in theFeed by strigifying it and assigning it to the <i>idFeedInfo</i> DOM object. 
+The Hello World app just displays what's in theFeed by stringifying it and assigning it to the <i>idFeedInfo</i> DOM object. 
 
 ### The Titled Items template
 
