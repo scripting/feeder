@@ -20,6 +20,12 @@ http://feeder.scripting.com/returnopml?url=http://scripting.com/rss.xml
 
 These calls are used from <a href="http://drummer.scripting.com/">Drummer</a> to implement the <a href="http://docserver.scripting.com/?verb=rss.readFeed">rss.readFeed</a> verb and to allow <a href="https://www.youtube.com/watch?v=j7L1bvP0dQc">expanding of rss node types</a>. 
 
+### Templates
+
+You an also run the contents of a reallysimple query through a template, which is just a web page, which has the result of the query as a local object you can use JavaScript to render.
+
+Here's the <a href="https://github.com/scripting/feeder/blob/main/docs/templates.md">docs page</a> for templates. 
+
 ### Caveats
 
 If you're deploying a real application, please run your own copy of this app. 

@@ -44,3 +44,7 @@ Here's the code that builds the list.
 
 This is the punchline for the whole <a href="https://github.com/scripting/reallysimple">reallysimple</a> stack up to this point. The goal was to make using info from a feed as simple as working with a JavaScript object. At this point you have the full power of JavaScript and the web to work with the info in a feed. 
 
+### Questions, comments
+
+Please post an item in <a href="https://github.com/scripting/feeder/issues/2">this thread</a>. 
+
