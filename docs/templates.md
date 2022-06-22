@@ -40,45 +40,7 @@ http://feeder.scripting.com/?template=titleditems&feedurl=https://news.ycombinat
 
 Here's the code that builds the list.
 
-```JavaScript
+```JavaScriptfunction viewTitledItems () {	var htmltext = "";	function add (s) {		htmltext += s + "\n";		}	add ("<ul>"); 	theFeed.items.forEach (function (item) {		if (item.title !== undefined) {			var link = item.title;			if (item.link !== undefined) {				link = "<a href=\"" + item.link + "\">" + link + "</a>";				}			add ("<li>" + link + "</li>");			}		});	add ("</ul>"); 	return (htmltext);	}```
 
-function viewTitledItems () {
-
-      var htmltext = "";
-
-      function add (s) {
-
-            htmltext += s + "\n";
-
-            }
-
-      add ("<ul>"); 
-
-      theFeed.items.forEach (function (item) {
-
-            if (item.title !== undefined) {
-
-var link = item.title;
-
-if (item.link !== undefined) {
-
-link = "<a href=\"" + item.link + "\">" + link + "</a>";
-
-}
-
-add ("<li>" + link + "</li>");
-
-}
-
-            });
-
-      add ("</ul>"); 
-
-      return (htmltext);
-
-      }
-
-```
-
-This is the punchline for the whole stack up to this point. The goal was to make using info from a feed as simple as working with a JavaScript object. At this point you have the full power of JavaScript and the web to work with the info in a feed. 
+This is the punchline for the whole reallysimple stack up to this point. The goal was to make using info from a feed as simple as working with a JavaScript object. At this point you have the full power of JavaScript and the web to work with the info in a feed. 
 
