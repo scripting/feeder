@@ -2,7 +2,7 @@
 
 The basic function of <a href="https://github.com/scripting/feeder">feeder</a> is to provide an <a href="http://feeder.scripting.com/returnjson?feedurl=https%3A%2F%2Frss.nytimes.com%2Fservices%2Fxml%2Frss%2Fnyt%2FTheater.xml">HTTP interface</a> to the <a href="https://github.com/scripting/reallysimple">reallysimple</a> package, so you can access its functionality from a browser-based app without having to run a server. 
 
-You can also run the contents of a reallysimple query through a template, which is just a web page, which has the result of the query as a local object you can use JavaScript to render.
+You can also run the contents of a reallysimple request through a template, which is just a web page, which has the result of the request as a local object you can use JavaScript to render.
 
 This doc walks you through the Hello World template first, it's a tour of the basic features, and then the Titled Items template that works with the reallysimple object in code. 
 
