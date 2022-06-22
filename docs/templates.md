@@ -8,21 +8,19 @@ This page walks you through the Hello World template first, it's a tour of the b
 
 ### The Hello World template
 
-This is the <a href="https://github.com/scripting/feeder/blob/main/templates/helloworld.html">template</a>. I suggest keeping this open in a tab for reference.
+This is the <a href="https://github.com/scripting/feeder/blob/main/templates/helloworld.html">template</a>.
 
 This is how you invoke it:
 
 <a href="http://feeder.scripting.com/?template=helloworld&feedurl=https://news.ycombinator.com/rss">http://feeder.scripting.com/?template=helloworld&feedurl=https://news.ycombinator.com/rss</a>
 
-I suggest opening that url in a browser, do a view source and leave that open in a tab.
-
-The template refers to 3 macros which are filled in by the feeder app before it serves it.
+The template refers to 3 macros which are filled in by the feeder app serving it.
 
 1. [%feedTitle%] -- the title of the feed, displayed in the &lt;title> element in the HTML.
 
 2. [%config%] -- configuration info from the server, assigned to a local variable <i>config.</i>
 
-3. [%feedJsonText%] -- the JSON object returned by the reallysimple package, assigned to a local variable, theFeed
+3. [%feedJsonText%] -- the JSON object returned by the reallysimple package, assigned to a local variable, <i>theFeed.</i>
 
 From there, the primary job of the template is to display and allow the user to interact with the contents of the feed, which is accessed locally through <i>theFeed,</i> which is just a JavaScript object. 
 
@@ -36,7 +34,7 @@ This template displays items that have titles and links to their &lt;link> value
 
 This is how you invoke it:
 
-http://feeder.scripting.com/?template=titleditems&feedurl=https://news.ycombinator.com/rss
+<a href="http://feeder.scripting.com/?template=titleditems&feedurl=https://news.ycombinator.com/rss">http://feeder.scripting.com/?template=titleditems&feedurl=https://news.ycombinator.com/rss</a>
 
 Here's the code that builds the list.
 
