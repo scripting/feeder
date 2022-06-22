@@ -4,7 +4,7 @@ The basic function of <a href="https://github.com/scripting/feeder">feeder</a> i
 
 You can also run the contents of a reallysimple query through a template, which is just a web page, which has the result of the query as a local object you can use JavaScript to render.
 
-This doc walks you through the Hello World template first, it's a tour of the basic features, and then the Titled Items template that works with the reallysimple objecdt. 
+This doc walks you through the Hello World template first, it's a tour of the basic features, and then the Titled Items template that works with the reallysimple object in code. 
 
 ### The Hello World template
 
