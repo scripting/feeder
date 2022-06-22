@@ -1,6 +1,6 @@
 # Templates
 
-The basic function of feeder is to provide an HTTP interface to the reallysimple package, so you can access its functionality from a browser-based app without having to run a server. 
+The basic function of <a href="https://github.com/scripting/feeder">feeder</a> is to provide an HTTP interface to the <a href="https://github.com/scripting/reallysimple">reallysimple</a> package, so you can access its functionality from a browser-based app without having to run a server. 
 
 You an also run the contents of a reallysimple query through a template, which is just a web page, which has the result of the query as a local object you can use JavaScript to render.
 
@@ -42,5 +42,5 @@ Here's the code that builds the list.
 
 ```JavaScriptfunction viewTitledItems () {	var htmltext = "";	function add (s) {		htmltext += s + "\n";		}	add ("<ul>"); 	theFeed.items.forEach (function (item) {		if (item.title !== undefined) {			var link = item.title;			if (item.link !== undefined) {				link = "<a href=\"" + item.link + "\">" + link + "</a>";				}			add ("<li>" + link + "</li>");			}		});	add ("</ul>"); 	return (htmltext);	}```
 
-This is the punchline for the whole reallysimple stack up to this point. The goal was to make using info from a feed as simple as working with a JavaScript object. At this point you have the full power of JavaScript and the web to work with the info in a feed. 
+This is the punchline for the whole <a href="https://github.com/scripting/reallysimple">reallysimple</a> stack up to this point. The goal was to make using info from a feed as simple as working with a JavaScript object. At this point you have the full power of JavaScript and the web to work with the info in a feed. 
 
