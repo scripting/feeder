@@ -1,4 +1,4 @@
-const myVersion = "0.4.8", myProductName = "feeder";    
+const myVersion = "0.4.9", myProductName = "feeder";    
 
 const fs = require ("fs");
 const utils = require ("daveutils");
@@ -88,18 +88,23 @@ function viewFeedInTemplate (feedUrl, templateName, callback) { //6/20/22 by DW
 		callback (pagetext);
 		}
 	readFeed (feedUrl, function (err, theFeed) {
-		var flnotfound = true;
-		utils.sureFolder (config.templatesFolderPath, function () {
-			var f = config.templatesFolderPath + templateName + ".html";
-			fs.readFile (f, function (err, templatetext) {
-				if (err) {
-					callback ("Can't view the feed because there was an error reading the template.");
-					}
-				else {
-					servePage (templatetext, theFeed);
-					}
+		if (err) { //6/23/22 by DW
+			callback ("Can't view the feed because there was an error reading it: " + err.message + ".");
+			}
+		else {
+			var flnotfound = true;
+			utils.sureFolder (config.templatesFolderPath, function () {
+				var f = config.templatesFolderPath + templateName + ".html";
+				fs.readFile (f, function (err, templatetext) {
+					if (err) {
+						callback ("Can't view the feed because there was an error reading the template.");
+						}
+					else {
+						servePage (templatetext, theFeed);
+						}
+					});
 				});
-			});
+			}
 		});
 	}
 function readConfig (f, config, callback) {
