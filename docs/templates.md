@@ -46,7 +46,7 @@ This is the punchline for the whole <a href="https://github.com/scripting/really
 
 ### The JSONify Feed template
 
-Here's the <a href="https://github.com/scripting/feeder/blob/main/templates/jsonifyfeed.html">template</a>.
+Here's the <a href="https://github.com/scripting/feeder/blob/main/templates/jsonify.html">template</a>.
 
 This is how you invoke it:
 
