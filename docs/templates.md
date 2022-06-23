@@ -1,4 +1,4 @@
-# Templates
+# How feeder templates work
 
 The basic function of <a href="https://github.com/scripting/feeder">feeder</a> is to provide an <a href="http://feeder.scripting.com/returnjson?feedurl=https%3A%2F%2Frss.nytimes.com%2Fservices%2Fxml%2Frss%2Fnyt%2FTheater.xml">HTTP interface</a> to the <a href="https://github.com/scripting/reallysimple">reallysimple</a> package, so you can access its functionality from a browser-based app without having to run a server. 
 
