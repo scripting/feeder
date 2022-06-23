@@ -1,4 +1,4 @@
-const myVersion = "0.4.9", myProductName = "feeder";    
+const myVersion = "0.4.10", myProductName = "feeder";    
 
 const fs = require ("fs");
 const utils = require ("daveutils");
@@ -71,11 +71,14 @@ function readFeed (feedUrl=config.defaultFeedUrl, callback) {
 		});
 	}
 function viewFeedInTemplate (feedUrl, templateName, callback) { //6/20/22 by DW
+	const whenstart = new Date ();
 	function servePage (templatetext, theFeed) {
 		const feedJsonText = utils.jsonStringify (theFeed);
 		const serverConfig = {
 			productName: myProductName, 
-			version: myVersion
+			version: myVersion,
+			ctSecs: utils.secondsSince (whenstart), //6/23/22 by DW
+			feedUrl //6/23/22 by DW
 			};
 		var pagetable = {
 			feedTitle: theFeed.title,

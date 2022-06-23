@@ -30,6 +30,8 @@ The Hello World app just displays what's in theFeed by stringifying it and assig
 
 ### The Titled Items template
 
+Here's the <a href="https://github.com/scripting/feeder/blob/main/templates/titleditems.html">template</a>.
+
 This template displays items that have titles and links to their &lt;link> value, if it has one. 
 
 This is how you invoke it:
@@ -41,6 +43,16 @@ Here's the code that builds the list.
 ```JavaScriptfunction viewTitledItems () {	var htmltext = "";	function add (s) {		htmltext += s + "\n";		}	add ("<ul>"); 	theFeed.items.forEach (function (item) {		if (item.title !== undefined) {			var link = item.title;			if (item.link !== undefined) {				link = "<a href=\"" + item.link + "\">" + link + "</a>";				}			add ("<li>" + link + "</li>");			}		});	add ("</ul>"); 	return (htmltext);	}```
 
 This is the punchline for the whole <a href="https://github.com/scripting/reallysimple">reallysimple</a> stack up to this point. The goal was to make using info from a feed as simple as working with a JavaScript object. At this point you have the full power of JavaScript and the web to work with the info in a feed. 
+
+### The JSONify Feed template
+
+Here's the <a href="https://github.com/scripting/feeder/blob/main/templates/jsonifyfeed.html">template</a>.
+
+This template displays the JSONified feed in a nice Concord outline. The top level of the object is expanded. The list of items is collapsed at the end. It's a fun way to browse the JSON that the reallysimple package generates.
+
+This is how you invoke it:
+
+<a href="http://feeder.scripting.com/?template=jsonify&feedurl=https%3A%2F%2Fwww.scotusblog.com%2Ffeed%2F">http://feeder.scripting.com/?template=jsonify&feedurl=https%3A%2F%2Fwww.scotusblog.com%2Ffeed%2F</a>
 
 ### Questions, comments
 
