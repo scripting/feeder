@@ -48,11 +48,11 @@ This is the punchline for the whole <a href="https://github.com/scripting/really
 
 Here's the <a href="https://github.com/scripting/feeder/blob/main/templates/jsonifyfeed.html">template</a>.
 
-It displays the JSONified feed in a nice Concord outline. The top level of the object is expanded. The list of items is collapsed. It's a fun way to browse the JSON that the <a href="https://github.com/scripting/reallysimple">reallysimple</a> package generates.
-
 This is how you invoke it:
 
 <a href="http://feeder.scripting.com/?template=jsonify&feedurl=http://scripting.com/rss.xml">http://feeder.scripting.com/?template=jsonify&feedurl=http://scripting.com/rss.xml</a>
+
+It displays the JSONified feed in a nice Concord outline. The top level of the object is expanded. The list of items is collapsed. It's a fun way to browse the JSON that the <a href="https://github.com/scripting/reallysimple">reallysimple</a> package generates.
 
 ### Questions, comments
 
