@@ -44,6 +44,18 @@ Here's the code that builds the list.
 
 This is the punchline for the whole <a href="https://github.com/scripting/reallysimple">reallysimple</a> stack up to this point. The goal was to make using info from a feed as simple as working with a JavaScript object. At this point you have the full power of JavaScript and the web to work with the info in a feed. 
 
+### The Mailbox template
+
+Here's the <a href="https://github.com/scripting/feeder/blob/main/templates/mailbox.html">template</a>.
+
+It displays the contents in a feed in the common mailbox format used by readers such as Feedly and NetNewsWire. 
+
+This is how you invoke it:
+
+<a href="http://feeder.scripting.com/?template=mailbox&feedurl=https://johnnaughton.substack.com/feed">http://feeder.scripting.com/?template=mailbox&feedurl=https://johnnaughton.substack.com/feed</a>
+
+The mailbox form works well with feeds with lots of titled longform posts, not so well with items that don't have titles, or are short.
+
 ### The JSONify Feed template
 
 Here's the <a href="https://github.com/scripting/feeder/blob/main/templates/jsonify.html">template</a>.
