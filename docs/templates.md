@@ -28,22 +28,6 @@ From there, the primary job of the template is to display and allow the user to 
 
 The Hello World app just displays what's in theFeed by stringifying it and assigning it to the <i>idFeedInfo</i> DOM object. 
 
-### The Titled Items template
-
-Here's the <a href="https://github.com/scripting/feeder/blob/main/templates/titleditems.html">template</a>.
-
-This template displays items that have titles and links to their &lt;link> value, if it has one. 
-
-This is how you invoke it:
-
-<a href="http://feeder.scripting.com/?template=titleditems&feedurl=https://news.ycombinator.com/rss">http://feeder.scripting.com/?template=titleditems&feedurl=https://news.ycombinator.com/rss</a>
-
-Here's the code that builds the list.
-
-```JavaScriptfunction viewTitledItems () {	var htmltext = "";	function add (s) {		htmltext += s + "\n";		}	add ("<ul>"); 	theFeed.items.forEach (function (item) {		if (item.title !== undefined) {			var link = item.title;			if (item.link !== undefined) {				link = "<a href=\"" + item.link + "\">" + link + "</a>";				}			add ("<li>" + link + "</li>");			}		});	add ("</ul>"); 	return (htmltext);	}```
-
-This is the punchline for the whole <a href="https://github.com/scripting/reallysimple">reallysimple</a> stack up to this point. The goal was to make using info from a feed as simple as working with a JavaScript object. At this point you have the full power of JavaScript and the web to work with the info in a feed. 
-
 ### The Mailbox template
 
 Here's the <a href="https://github.com/scripting/feeder/blob/main/templates/mailbox.html">template</a>.
@@ -55,6 +39,22 @@ This is how you invoke it:
 <a href="http://feeder.scripting.com/?template=mailbox&feedurl=https://johnnaughton.substack.com/feed">http://feeder.scripting.com/?template=mailbox&feedurl=https://johnnaughton.substack.com/feed</a>
 
 The mailbox form works well with feeds with lots of titled longform posts, not so well with items that don't have titles, or are short.
+
+### The Titled Items template
+
+Here's the <a href="https://github.com/scripting/feeder/blob/main/templates/titleditems.html">template</a>.
+
+This template <a href="http://scripting.com/images/2022/07/15/memexScreenFull.png">displays</a> items that have titles and links to their &lt;link> value, if it has one. 
+
+This is how you invoke it:
+
+<a href="http://feeder.scripting.com/?template=titleditems&feedurl=https://news.ycombinator.com/rss">http://feeder.scripting.com/?template=titleditems&feedurl=https://news.ycombinator.com/rss</a>
+
+Here's the code that builds the list.
+
+```JavaScriptfunction viewTitledItems () {	var htmltext = "";	function add (s) {		htmltext += s + "\n";		}	add ("<ul>"); 	theFeed.items.forEach (function (item) {		if (item.title !== undefined) {			var link = item.title;			if (item.link !== undefined) {				link = "<a href=\"" + item.link + "\">" + link + "</a>";				}			add ("<li>" + link + "</li>");			}		});	add ("</ul>"); 	return (htmltext);	}```
+
+This is the punchline for the whole <a href="https://github.com/scripting/reallysimple">reallysimple</a> stack up to this point. The goal was to make using info from a feed as simple as working with a JavaScript object. At this point you have the full power of JavaScript and the web to work with the info in a feed. 
 
 ### The JSONify Feed template
 
